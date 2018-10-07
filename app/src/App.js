@@ -12,7 +12,7 @@ import reqwest from 'reqwest';
 
 // var {getAllProjects} = require('./ethereum/project.js')
 
-// import {getAllProjects} from './ethereum/project.js';
+import {getAllProjects} from './ethereum/project.js';
 
 
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
@@ -33,8 +33,11 @@ class App extends Component {
       });
     });
 
-    // var list = getAllProjects();
-    // console.log(list);
+    getAllProjects().then((some)=>{
+      this.setState({
+        list: some
+      })
+    })
   }
 
   getData = (callback) => {
@@ -66,7 +69,8 @@ class App extends Component {
     });
   }
   render() {
-    const { loading, loadingMore, showLoadingMore, data } = this.state;
+
+    const { loading, loadingMore, showLoadingMore, list } = this.state;
     const loadMore = showLoadingMore ? (
       <div style={{ textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px' }}>
         {loadingMore && <Spin />}
@@ -88,15 +92,14 @@ class App extends Component {
             loading={loading}
             itemLayout="horizontal"
             loadMore={loadMore}
-            dataSource={data}
+            dataSource={list}
             renderItem={item => (
-              <List.Item actions={[<a>edit</a>, <a>more</a>]}>
+              <List.Item>
                 <List.Item.Meta
                   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={<Link to="/about">{item.name.last}</Link>}
-                  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  title={<Link to="/about">{item.address}</Link>}
+                  description={`${item.projectName} : ${item.projectDesc}`}
                 />
-                <div>content</div>
               </List.Item>
             )}
           />

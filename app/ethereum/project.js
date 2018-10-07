@@ -12,7 +12,7 @@ const getAllProjects = async() => {
 		const accounts = await  web3.eth.getAccounts();
 		
 		const projectDetailList = [];
-		for(var i in deployedProjects){		
+		for(i in deployedProjects){		
 			const project = await new web3.eth.Contract((JSON.parse(compiledproject.interface)), 
 			deployedProjects[i]);
 
@@ -28,7 +28,7 @@ const getAllProjects = async() => {
 				creatorName,
 				creatorContact
 			});
-			// delete project, projectName, projectDesc, creatorContact, creatorName;
+			delete project, projectName, projectDesc, creatorContact, creatorName;
 		}
 		console.log(projectDetailList);
 		return projectDetailList;
@@ -73,7 +73,7 @@ const getProjectDetails = async(address) => {
 		return {projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount, requestDetail}
 		});
 	}
-	// delete project,i,request; 	
+	delete project,i,request; 	
 	console.log("hey3",{projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount, requestDetail})
 	return {projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount, requestDetail}
 }
@@ -81,19 +81,15 @@ const getProjectDetails = async(address) => {
 // Function to contribute to a project
 const contribute = async(address, amount) => {
 	
-	console.log(address, amount)
 	const project = await new web3.eth.Contract((JSON.parse(compiledproject.interface)), 
 		address);
 
-	const accounts = await web3.eth.getAccounts();
-	console.log(accounts)
-
-	// await project.methods.contribute(web3.utils.toWei(amount, "ether")).send({
-		await project.methods.contribute(true).send({
+	const accounts = await  web3.eth.getAccounts();
+	
+	await project.methods.contribute(web3.utils.toWei(amount, "ether")).send({
 		from: accounts[0],
 		value: web3.utils.toWei(amount,"ether")
 	});
-	console.log("hogya")
 
 }
 
@@ -174,22 +170,13 @@ const finalizeRequest = async(address, index) => {
 
 //getProjectDetails("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72")
 
-// contribute("0x5E8566CFac62FAC63D85053366282333dB1140d7", "1")
+//contribute("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", "1")
 
 //createRequest("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", "buying food", "www.food.com", "2", "0x88a4dd75299C3628dc75ba58f238bD3Fff29Ede0")
 
-// getRequestDetails("0x5E8566CFac62FAC63D85053366282333dB1140d7", 0);
+getRequestDetails("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", 1);
 
 //approveRequest("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", 1);
 
 //finalizeRequest("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", 1);
  
-export {
-	getAllProjects,
-	getProjectDetails,
-	contribute,
-	createRequest,
-	getRequestDetails,
-	approveRequest,
-	finalizeRequest
-}

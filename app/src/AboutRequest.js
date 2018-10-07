@@ -9,10 +9,13 @@ import { List, Avatar, Spin, Menu, Icon } from 'antd';
 import {
   Link
 } from 'react-router-dom'
+import {getRequestDetails, approveRequest, finalizeRequest} from './ethereum/project.js';
+
 
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
 const FormItem = Form.Item;
+
 
 function onChange(value) {
     console.log('changed', value);
@@ -25,6 +28,7 @@ class About extends Component {
         loadingMore: false,
         showLoadingMore: true,
         data: [],
+        request: null
       }
       componentDidMount() {
         this.getData((res) => {
@@ -33,7 +37,17 @@ class About extends Component {
             data: res.results,
           });
         });
+
+        getRequestDetails("0x5E8566CFac62FAC63D85053366282333dB1140d7", "0").then((some)=>{
+            this.setState({
+              request: some
+            })
+        })
+
+
       }
+
+
       getData = (callback) => {
         reqwest({
           url: fakeDataUrl,
@@ -70,7 +84,7 @@ class About extends Component {
       }
       
   render() {
-    const { loading, loadingMore, showLoadingMore, data } = this.state;
+    const { loading, loadingMore, showLoadingMore, data, request } = this.state;
     const loadMore = showLoadingMore ? (
       <div style={{ textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px' }}>
         {loadingMore && <Spin />}
@@ -105,16 +119,33 @@ class About extends Component {
                         {/* <InputNumber min={0} defaultValue={3}  onChange={onChange}/> */}
                         {/* </FormItem> */}
                         <FormItem {...buttonItemLayout}>
-                            <Button type="primary">Submit</Button>
+                            <Button type="primary" onClick={()=>{
+                              approveRequest("0x5E8566CFac62FAC63D85053366282333dB1140d7", "0").then(()=>{
+                                console.log("WOWOWOWO")
+                              })
+                            }}>Submit</Button>
                         </FormItem>                        <FormItem {...buttonItemLayout}>
-                            <Button type="danger">Finalize</Button>
+                            <Button type="danger" onClick={()=>{
+                              finalizeRequest("0x5E8566CFac62FAC63D85053366282333dB1140d7", "0").then(()=>{
+                                console.log("WOWOWOWO")
+                              })
+                            }}>Finalize</Button>
                         </FormItem>
                     </Form>
                 </Col>
                 <Col span={16} pull={4}>
-                    <h2>Description Lorem emsum</h2>
-                    <p>Value: </p>
-                    <p>Vendor: </p>
+                        {request?
+                        <div>
+                    <h2>{request.description}</h2>
+                    <p>Contact: {request.contact}</p>
+                    <p>Reciepient: {request.recipient}</p>
+                    <p>Approves : {request.approvalCount}</p>
+                    <p>Is Complete: {request.complete}</p>
+                    <p>Value: {request.value}</p>
+                    {/* <p>Vendor: {request.value}</p> */}
+                    </div>
+                        :
+                        null}
                 </Col>
             </Row>
         </div>

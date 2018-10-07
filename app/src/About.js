@@ -10,6 +10,8 @@ import {
   Link
 } from 'react-router-dom'
 
+import {getProjectDetails, contribute} from './ethereum/project.js';
+
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
 const FormItem = Form.Item;
@@ -25,6 +27,7 @@ class About extends Component {
         loadingMore: false,
         showLoadingMore: true,
         data: [],
+        project: null
       }
       componentDidMount() {
         this.getData((res) => {
@@ -33,6 +36,14 @@ class About extends Component {
             data: res.results,
           });
         });
+
+        getProjectDetails("0x5E8566CFac62FAC63D85053366282333dB1140d7").then((some)=>{
+          this.setState({
+            project: some
+          })
+        })
+
+
       }
       getData = (callback) => {
         reqwest({
@@ -70,7 +81,7 @@ class About extends Component {
       }
       
   render() {
-    const { loading, loadingMore, showLoadingMore, data } = this.state;
+    const { loading, loadingMore, showLoadingMore, data, project } = this.state;
     const loadMore = showLoadingMore ? (
       <div style={{ textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px' }}>
         {loadingMore && <Spin />}
@@ -105,15 +116,29 @@ class About extends Component {
                         <InputNumber min={0} defaultValue={3}  onChange={onChange}/>
                         </FormItem>
                         <FormItem {...buttonItemLayout}>
-                            <Button type="primary">Contribute</Button>
+                            <Button type="primary" onClick={()=>
+                            {
+                              contribute("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", "1").then(()=>{
+                                console.log("hello")
+                              }
+                              )
+                            }}>Contribute</Button>
                         </FormItem>
                     </Form>
                 </Col>
                 <Col span={16} pull={4}>
-                    <h2>Description liasd laibdslb aldbsa dlas ldalsn liasnd lsandl iansldn sald </h2>
-                    <p>Founder: </p>
-                    <p>Contact: </p>
-                    <Link to="/requests">See all requests</Link>
+                    {
+                      project?
+                      <div>
+                        <h2>0x5E8566CFac62FAC63D85053366282333dB1140d7</h2>
+                        <h2>{project.projectDesc}</h2>
+                        <p>Founder: {project.creatorName}</p>
+                        <p>Contact: {project.creatorContact}</p>
+                        <Link to="/requests">See all requests</Link>
+                      </div>
+                    :
+                    null
+                    }
                 </Col>
             </Row>
         </div>

@@ -37,15 +37,15 @@ ReactDOM.render(
                 <Menu.Item key="2"><Link to="/projects">Project List</Link></Menu.Item>
                 <Menu.Item key="3"><Link to="/aboutus">About Us</Link></Menu.Item>
                 <Menu.Item key="4"><Link to="/contactus">Contact Us</Link></Menu.Item>
-                <span style={{
+                {/* <span style={{
                     marginRight: '20px',
                     float: 'right'
-                }} >
+                }} > */}
                 <Icon style={{ fontSize: '20px', color: 'blue', margin: '10px' }} type="facebook" theme="outlined" />
                 <Icon style={{ fontSize: '20px', color: 'red', margin: '10px' }} type="youtube" theme="outlined" />
                 <Icon style={{ fontSize: '20px', color: '#08c', margin: '10px' }} type="twitter" theme="outlined" />
                 <Icon style={{ fontSize: '20px', color: 'pink', margin: '10px' }} type="instagram" theme="outlined" />
-                </span>
+                {/* </span> */}
                 {/* <Menu.Item key="5"><Icon spin={true} type="plus-circle" className="publish-btn" /></Menu.Item>
                 <Menu.Item key="6"><Icon spin={true} type="login" className="losggin-btn" /></Menu.Item> */}
             </Menu>

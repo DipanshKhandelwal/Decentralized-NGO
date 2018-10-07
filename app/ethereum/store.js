@@ -6,7 +6,7 @@ const compiledStore = require("../ethereum/build/Store.json");
 
 
 const provider = new hdWalletProvider(
-	"jelly merry cousin solid gallery among hospital pistol favorite design zebra helmet",
+	"cousin wasp clip dynamic advance devote this million magic bean ceiling anger",
 	"https://rinkeby.infura.io/v3/e8bccfbf91864d7ea8797b0ae8b2d30a"  // This address will be generated through infura 
 );
 
@@ -39,5 +39,4 @@ deployProject("0.25", "Feed'em", "Feeding the homeless Kids of Vadodara", "Daksh
 	console.log(add[add.length - 1]);
 });
 */
-export {readProjects, web3, deployProject};
-// module.exports = {readProjects, web3, deployProject};
+module.exports = {readProjects, web3, deployProject};
