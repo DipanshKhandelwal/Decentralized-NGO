@@ -90,11 +90,26 @@ const contribute = async(address, amount) => {
 
 }
 
+const createRequest = async(description, contact, value, recipient  ) => {
+	
+	const project = await new web3.eth.Contract((JSON.parse(compiledproject.interface)), 
+		address);
+
+	const accounts = await  web3.eth.getAccounts();
+	
+	await project.methods
+			.createRequest("Need a Rasberry Pi","www.vendor.com", "100", accounts[2])
+			.send({
+				from: accounts[0],
+				gas: "1000000"
+			});	
+}
+
 //contribute(1, 124)
 
 //getAllProjects();
 
 //getProjectDetails("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72")
 
-contribute("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", "1")
+//contribute("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", "1")
 
