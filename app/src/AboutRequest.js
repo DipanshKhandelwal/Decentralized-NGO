@@ -88,36 +88,37 @@ class About extends Component {
     } : null;
     return (
         <div>
-            <h1 style={{display: "flex", justifyContent: "center", fontSize: "50px"}}>About</h1>
+            <h1 style={{display: "flex", justifyContent: "center", fontSize: "50px"}}>Request Details</h1>
             <div style={{ background: '#ECECEC', padding: '30px' }}>
 
             <Row type="flex" justify="center">
                 <Col span={6} push={18}>
                     <Form layout={formLayout}>
                         <FormItem {...buttonItemLayout}>
-                            <Switch checkedChildren="Associate" unCheckedChildren="Contributor"/>
+                            <Switch checkedChildren="Approve" unCheckedChildren="Decline"/>
 
                         </FormItem>
-                        <FormItem
+                        {/* <FormItem
                             label="Contribute"
                             {...formItemLayout}
-                        >
-                        <InputNumber min={0} defaultValue={3}  onChange={onChange}/>
-                        </FormItem>
+                        > */}
+                        {/* <InputNumber min={0} defaultValue={3}  onChange={onChange}/> */}
+                        {/* </FormItem> */}
                         <FormItem {...buttonItemLayout}>
-                            <Button type="primary">Contribute</Button>
+                            <Button type="primary">Submit</Button>
+                        </FormItem>                        <FormItem {...buttonItemLayout}>
+                            <Button type="danger">Finalize</Button>
                         </FormItem>
                     </Form>
                 </Col>
                 <Col span={16} pull={4}>
                     <h2>Description liasd laibdslb aldbsa dlas ldalsn liasnd lsandl iansldn sald </h2>
-                    <p>Founder: </p>
-                    <p>Contact: </p>
-                    <Link to="/requests">See all requests</Link>
+                    <p>Value: </p>
+                    <p>Vendor: </p>
                 </Col>
             </Row>
         </div>
-        <Row type="flex" justify="center">
+        {/* <Row type="flex" justify="center">
             <span style={{fontSize: "40px", marginTop: "16px"}}>Contributors</span>
             <Divider ></Divider>
             <Col xs={20} sm={16} md={12} lg={18} xl={12}>
@@ -131,7 +132,7 @@ class About extends Component {
                     <List.Item actions={[<a>edit</a>, <a>more</a>]}>
                         <List.Item.Meta
                         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                        title={item.name.last}
+                        title={<a href="https://ant.design">{item.name.last}</a>}
                         description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                         />
                         <div>content</div>
@@ -139,7 +140,7 @@ class About extends Component {
                     )}
                 />
             </Col>
-        </Row>
+        </Row> */}
 
 
         </div>

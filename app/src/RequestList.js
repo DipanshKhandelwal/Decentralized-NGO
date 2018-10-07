@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
-import { List, Avatar, Button, Spin, Menu, Icon } from 'antd';
+import { List, Avatar, Button, Spin, Menu, Icon, Divider } from 'antd';
 import { Row, Col } from 'antd';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 
 import reqwest from 'reqwest';
 
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
-class App extends Component {
+class RequestList extends Component {
   state = {
     loading: true,
     loadingMore: false,
@@ -64,6 +69,11 @@ class App extends Component {
         <Row type="flex" justify="center">
         <Col xs={20} sm={16} md={12} lg={18} xl={12}>
         <div>
+          <br />
+        <h2>Present Requirements
+        <Button style={{float: "right", display: "flex"}}><Link to="/newrequest">New Request</Link></Button>
+        </h2>
+        <Divider ></Divider>
           <List
             className="demo-loadmore-list"
             loading={loading}
@@ -71,13 +81,16 @@ class App extends Component {
             loadMore={loadMore}
             dataSource={data}
             renderItem={item => (
-              <List.Item actions={[<a>edit</a>, <a>more</a>]}>
+              <List.Item
+              // actions={[<a>edit</a>, <a>more</a>]}
+              >
                 <List.Item.Meta
-                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={<a href="https://ant.design">{item.name.last}</a>}
-                  description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  // avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                  // title={<a href="https://ant.design">{item.name.last}</a>}
+                  // description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                  description={<Link to="/aboutrequest">description</Link>}
                 />
-                <div>content</div>
+                <div>Value : $ 1000</div>
               </List.Item>
             )}
           />
@@ -90,4 +103,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default RequestList;

@@ -72,7 +72,6 @@ class App extends Component {
           <br />
         <h2>Working Projects
         <Button style={{float: "right", display: "flex"}}><Link to="/addproject">Add Projects</Link></Button>
-
         </h2>
         <Divider ></Divider>
           <List
@@ -85,7 +84,7 @@ class App extends Component {
               <List.Item actions={[<a>edit</a>, <a>more</a>]}>
                 <List.Item.Meta
                   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={<a href="https://ant.design">{item.name.last}</a>}
+                  title={<Link to="/about">{item.name.last}</Link>}
                   description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                 />
                 <div>content</div>

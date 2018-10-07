@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import Register from "./Register";
 import About from "./About";
+import RequestList from './RequestList';
+import NewRequest from './NewRequest';
+import AboutRequest from './AboutRequest';
+import Home from './Home';
+
 import * as serviceWorker from './serviceWorker';
 import {
     BrowserRouter as Router,
@@ -29,15 +34,17 @@ ReactDOM.render(
                 <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
                 <Menu.Item key="2"><Link to="/projects">Project List</Link></Menu.Item>
                 <Menu.Item key="3"><Link to="/">About Us</Link></Menu.Item>
-                <Menu.Item key="6"><Link to="/">Contact Us</Link></Menu.Item>
-                <Menu.Item key="4"><Icon spin={true} type="plus-circle" className="publish-btn" /></Menu.Item>
-                <Menu.Item key="5"><Icon spin={true} type="login" className="loggin-btn" /></Menu.Item>
+                <Menu.Item key="4"><Link to="/">Contact Us</Link></Menu.Item>
+                {/* <Menu.Item key="5"><Icon spin={true} type="plus-circle" className="publish-btn" /></Menu.Item>
+                <Menu.Item key="6"><Icon spin={true} type="login" className="loggin-btn" /></Menu.Item> */}
             </Menu>
-          <Route exact path="/" component={App}/>
+          <Route exact path="/" component={Home}/>
           <Route exact path="/projects" component={App}/>
           <Route exact path="/addproject"  component={Register} />
           <Route exact path="/about" component={About} />
-          <Route exact path="/details" component={App} />
+          <Route exact path="/requests" component={RequestList} />
+          <Route exact path="/newrequest"  component={NewRequest} />
+          <Route exact path="/aboutrequest" component={AboutRequest} />
         </div>
     </Router>
     
