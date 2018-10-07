@@ -1,3 +1,9 @@
+@import '../node_modules/antd/dist/antd.css';
+
+.demo-loadmore-list {
+  min-height: 350px;
+}
+
 .App {
   text-align: center;
 }

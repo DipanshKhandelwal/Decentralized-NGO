@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import { List, Avatar, Button, Spin, Menu, Icon, Divider } from 'antd';
+import { List, Avatar, Button, Spin, Menu, Icon } from 'antd';
 import { Row, Col } from 'antd';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
 
 
 import reqwest from 'reqwest';
@@ -69,12 +64,6 @@ class App extends Component {
         <Row type="flex" justify="center">
         <Col xs={20} sm={16} md={12} lg={18} xl={12}>
         <div>
-          <br />
-        <h2>Working Projects
-        <Button style={{float: "right", display: "flex"}}><Link to="/addproject">Add Projects</Link></Button>
-
-        </h2>
-        <Divider ></Divider>
           <List
             className="demo-loadmore-list"
             loading={loading}
