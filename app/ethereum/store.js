@@ -2,34 +2,41 @@
 // This file contains read() which returns a promise containing the contract instance of inbox
 const Web3 = require("web3");
 const hdWalletProvider = require("truffle-hdwallet-provider");
-const compiledStore = require("../ethereum/build/projectStore.json");
+const compiledStore = require("../ethereum/build/Store.json");
 
-const getWeb3 = async()=> {
-	const provider = new hdWalletProvider(
-		"cousin wasp clip dynamic advance devote this million magic bean ceiling anger",
-		"https://rinkeby.infura.io/v3/e8bccfbf91864d7ea8797b0ae8b2d30a"  // This address will be generated through infura 
-	);
-	
-	return new Web3(provider);
-}
 
-const read = async () => {
+const provider = new hdWalletProvider(
+	"cousin wasp clip dynamic advance devote this million magic bean ceiling anger",
+	"https://rinkeby.infura.io/v3/e8bccfbf91864d7ea8797b0ae8b2d30a"  // This address will be generated through infura 
+);
 
-	const web3 = await getWeb3();
-	
+const web3 = new Web3(provider);
+
+const readProjects = async () => {
+
 	const accounts = await  web3.eth.getAccounts();
 	const store = await new web3.eth.Contract((JSON.parse(compiledStore.interface)), 
-		"0x97709358b13c070E20cbe0d314834244E1f0D834");
-	
-	/*  Code to deploy a new camapign
-	console.log("Deployed Camapigns Initially- ", await store.methods.getDeployedprojects().call())
-	await store.methods.createproject(123).send(({gas: "1000000", from: accounts[0]}));	
-	console.log("Deployed Camapigns After createproject() call- ", await store.methods.getDeployedprojects().call())
-	*/
+	"0xF01600c35f1644A27B6BCD5129baAfa8437A285b");
 
-	return await store.methods.getDeployedprojects().call();
+	return await store.methods.getDeployedProjects().call();
 } 
 
-//read();
+//readProjects();
 
-module.exports = {read,getWeb3};
+const deployProject = async (min, projectName, projectDesc, creatorName, creatorContact) => {
+			
+	const accounts = await  web3.eth.getAccounts();
+	const store = await new web3.eth.Contract((JSON.parse(compiledStore.interface)), 
+	"0xF01600c35f1644A27B6BCD5129baAfa8437A285b");
+    		
+	console.log("Deployed Camapigns Initially- ", await store.methods.getDeployedProjects().call())
+	await store.methods.createProject(web3.utils.toWei(min, "ether"), projectName, projectDesc, creatorName, creatorContact).send(({gas: "3000000", from: accounts[0]}));	
+
+	return await store.methods.getDeployedProjects().call()
+} 
+/*
+deployProject("0.25", "Feed'em", "Feeding the homeless Kids of Vadodara", "Daksha Foundation", "www.daksha.com").then((add) => {
+	console.log(add[add.length - 1]);
+});
+*/
+module.exports = {readProjects, web3, deployProject};
