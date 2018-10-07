@@ -47,10 +47,10 @@ class NewRequest extends Component {
                             <p>ds6d4s9d612s6d9sd46sd6sd6sd6s46</p>
                         </FormItem>
                         <FormItem
-                            label="Value"
+                            label="Value (Wei)"
                             {...formItemLayout}
                         >
-                            <Input placeholder="Value of the project" />
+                            <Input placeholder="Value of the request (in Wei)" />
                         </FormItem>
                         <FormItem
                             label="Vendor"

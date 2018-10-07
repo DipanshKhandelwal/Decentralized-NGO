@@ -8,8 +8,12 @@ import {
   Link
 } from 'react-router-dom'
 
-
 import reqwest from 'reqwest';
+
+// var {getAllProjects} = require('./ethereum/project.js')
+
+// import {getAllProjects} from './ethereum/project.js';
+
 
 const fakeDataUrl = 'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
 
@@ -19,6 +23,7 @@ class App extends Component {
     loadingMore: false,
     showLoadingMore: true,
     data: [],
+    list:[]
   }
   componentDidMount() {
     this.getData((res) => {
@@ -27,7 +32,11 @@ class App extends Component {
         data: res.results,
       });
     });
+
+    // var list = getAllProjects();
+    // console.log(list);
   }
+
   getData = (callback) => {
     reqwest({
       url: fakeDataUrl,

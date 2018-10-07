@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+.start {
+  background-image: url('../src/image/back.jpg');
+  height: 93vh;
+}

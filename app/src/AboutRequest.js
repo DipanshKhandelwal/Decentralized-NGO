@@ -112,7 +112,7 @@ class About extends Component {
                     </Form>
                 </Col>
                 <Col span={16} pull={4}>
-                    <h2>Description liasd laibdslb aldbsa dlas ldalsn liasnd lsandl iansldn sald </h2>
+                    <h2>Description Lorem emsum</h2>
                     <p>Value: </p>
                     <p>Vendor: </p>
                 </Col>
