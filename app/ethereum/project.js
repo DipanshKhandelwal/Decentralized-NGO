@@ -50,28 +50,31 @@ const getProjectDetails = async(address) => {
 	const minContribution = await project.methods.minContribution().call();
 	const approversCount = await project.methods.approversCount().call();
 
-	try {
-		const request = await project.methods.requests(0).call();
-	}
-	catch(err){
-
-		console.log({projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount})
+	let request  = await project.methods.requests(0).call().catch((err) => {
+		console.log("hey1",{projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount})
 		return {projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount}
-	
-	}
-	let i = 1;
+	})
+
+	//console.log(request)
+	let i = 0;
 	let requestDetail = [];
 	
 	while(request.description != null){
 		requestDetail.push({
+			index: i,
+			request:
+			{
 			description: request.description,
 			value : request.value
-		});
+		}});
 		i++;
-		request = await project.methods.requests(i).call();
+		request = await project.methods.requests(i).call().catch((err) => {
+		//console.log("hey2", {projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount})
+		return {projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount, requestDetail}
+		});
 	}
 	delete project,i,request; 	
-	console.log(projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount, requestDetail)
+	console.log("hey3",{projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount, requestDetail})
 	return {projectName, projectDesc, creatorName, creatorContact, minContribution, approversCount, requestDetail}
 }
 
@@ -82,15 +85,18 @@ const contribute = async(address, amount) => {
 		address);
 
 	const accounts = await  web3.eth.getAccounts();
-	
-	await project.methods.contribute(web3.utils.toWei(amount, "ether")).send({
-		from: accounts[0],
-		value: web3.utils.toWei(amount,"ether")
+
+	console.log(web3.utils.toWei(amount,"ether"))
+
+	await project.methods.contribute("true").send({
+		value: web3.utils.toWei(amount,"ether"),
+		from: accounts[0]
 	});
 
+	console.log("heyyyyyy")
 }
 
-const createRequest = async(description, contact, value, recipient  ) => {
+const createRequest = async(address, description, contact, value, recipient  ) => {
 	
 	const project = await new web3.eth.Contract((JSON.parse(compiledproject.interface)), 
 		address);
@@ -98,18 +104,82 @@ const createRequest = async(description, contact, value, recipient  ) => {
 	const accounts = await  web3.eth.getAccounts();
 	
 	await project.methods
-			.createRequest("Need a Rasberry Pi","www.vendor.com", "100", accounts[2])
+			.createRequest(description,contact, value, recipient)
 			.send({
 				from: accounts[0],
-				gas: "1000000"
-			});	
+				gas: "3000000"
+			});
+	console.log("yesss");			
 }
 
+const getRequestDetails = async(address, index) => {
+	
+	const project = await new web3.eth.Contract((JSON.parse(compiledproject.interface)), 
+		address);
+
+	const accounts = await  web3.eth.getAccounts();
+	let request  = await project.methods.requests(index).call().catch((err) => {
+		return null;
+	});
+
+	let reqDesc = {description: request.description,
+        contact: request.contact,
+        value: request.value,
+        recipient:  request.recipient,
+        complete: request.complete,
+        approvalCount: request.approvalCount};
+    console.log(reqDesc)
+    return reqDesc;  
+}
+
+const approveRequest = async(address, index) => {
+	
+	const project = await new web3.eth.Contract((JSON.parse(compiledproject.interface)), 
+		address);
+
+	const accounts = await  web3.eth.getAccounts();
+	let request  = await project.methods.approveRequest(index).send({
+				from: accounts[0],
+				gas: "3000000"
+			}).then((xyz) => {
+		console.log("Approved!!!!");
+		return "Approved";
+	}).catch((err) => {
+		console.log(err)
+		return null;
+	});
+}
+
+const finalizeRequest = async(address, index) => {
+	
+	const project = await new web3.eth.Contract((JSON.parse(compiledproject.interface)), 
+		address);
+
+	const accounts = await  web3.eth.getAccounts();
+	let request  = await project.methods.finalizeRequest(index).send({
+				from: accounts[0],
+				gas: "3000000"
+			}).then((xyz) => {
+		console.log("Dne!!!!");
+		return "Done";
+	}).catch((err) => {
+		console.log(err)
+		return null;
+	});
+}
 //contribute(1, 124)
 
 //getAllProjects();
 
 //getProjectDetails("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72")
 
-//contribute("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", "1")
+//contribute("0x743578Eb87310939063cA5445d5A240e320E4F22", "1")
 
+//createRequest("0x5E8566CFac62FAC63D85053366282333dB1140d7", "buying food", "www.food.com", "2", "0x88a4dd75299C3628dc75ba58f238bD3Fff29Ede0")
+
+//getRequestDetails("0x08a701EC7c1616cE5CBdacb0A65d26783ef8Cb72", 0);
+
+//approveRequest("0x5E8566CFac62FAC63D85053366282333dB1140d7", 0);
+
+finalizeRequest("0x5E8566CFac62FAC63D85053366282333dB1140d7", 0);
+ 
