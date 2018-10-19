@@ -6,7 +6,7 @@
  They are designed to avoid any single point of failure. They typically have tokens to reward users for providing computing power.
  Decentralized applications may run on top of other cryptographic systems such as <b>Ethereum</b>.
 
-#Ethereum
+#<b>Ethereum</b>
 
 Ethereum is an open-source, public, blockchain-based distributed computing platform and operating system featuring smart contract (scripting) functionality.[3] It supports a modified version of Nakamoto consensus via transaction-based state transitions.
 
